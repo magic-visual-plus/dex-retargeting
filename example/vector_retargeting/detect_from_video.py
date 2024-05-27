@@ -30,6 +30,8 @@ def retarget_video(retargeting: SeqRetargeting, video_path: str, output_path: st
 
                 rgb = frame[..., ::-1]
                 num_box, joint_pos, keypoint_2d, mediapipe_wrist_rot = detector.detect(rgb)
+                if joint_pos is None:
+                    continue
 
                 retargeting_type = retargeting.optimizer.retargeting_type
                 indices = retargeting.optimizer.target_link_human_indices
@@ -76,7 +78,9 @@ def main(
     """
 
     config_path = get_default_config_path(robot_name, retargeting_type, hand_type)
+    print(f'config_path {config_path}')
     robot_dir = Path(__file__).absolute().parent.parent.parent / "assets" / "robots" / "hands"
+    print(f'robot_dir {robot_dir}')
     RetargetingConfig.set_default_urdf_dir(str(robot_dir))
     retargeting = RetargetingConfig.load_from_file(config_path).build()
     retarget_video(retargeting, video_path, output_path, str(config_path))

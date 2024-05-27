@@ -114,18 +114,23 @@ class SingleHandDetector:
         :return: the coordinate frame of wrist in MANO convention
         """
         assert keypoint_3d_array.shape == (21, 3)
+        # points选取手腕（第0个点）、食指根部（第5个点）和中指根部（第9个点）的3D坐标。
         points = keypoint_3d_array[[0, 5, 9], :]
 
         # Compute vector from palm to the first joint of middle finger
+        # 计算从手掌（手腕）到中指根部的向量，作为x方向的初始向量。
         x_vector = points[0] - points[2]
 
         # Normal fitting with SVD
         points = points - np.mean(points, axis=0, keepdims=True)
         u, s, v = np.linalg.svd(points)
-
+        # 使用奇异值分解（SVD）计算最佳拟合平面的法向量。v[2, :]是法向量
         normal = v[2, :]
 
         # Gram–Schmidt Orthonormalize
+        # 使用Gram-Schmidt正交化过程，使得x方向和法向量正交。
+        # 对正交化后的x向量归一化。
+        # 计算z方向，z方向是x方向和法向量的叉积
         x = x_vector - np.sum(x_vector * normal) * normal
         x = x / np.linalg.norm(x)
         z = np.cross(x, normal)

@@ -124,6 +124,10 @@ def render_by_sapien(
     retargeting_joint_names = meta_data["joint_names"]
     retargeting_to_sapien = np.array([retargeting_joint_names.index(name) for name in sapien_joint_names]).astype(int)
 
+    if not headless:
+        for _ in range(2):
+            viewer.render()
+                
     for qpos in tqdm.tqdm(data):
         robot.set_qpos(np.array(qpos)[retargeting_to_sapien])
 

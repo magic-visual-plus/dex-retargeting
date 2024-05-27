@@ -14,6 +14,8 @@ python3 detect_from_video.py \
   --output-path data/allegro_joints.pkl 
 ```
 
+python3 detect_from_video.py --robot-name leap --video-path data/my_hand.mp4 --retargeting-type dexpilot --hand-type right --output-path data/leap_my_joints.pkl 
+
 This command will output the joint trajectory as a pickle file at the `output_path`.
 
 The pickle file is a python dictionary with two keys: `meta_data` and `data`. `meta_data`, a dictionary, includes
@@ -35,6 +37,8 @@ python3 render_robot_hand.py \
 ```
 
 python3 render_robot_hand.py --pickle-path data/leap_joints.pkl --output-video-path data/leap.mp4 --headless
+
+python3 render_robot_hand.py --pickle-path data/leap_my_joints.pkl --output-video-path data/my_leap.mp4 
 
 This command uses the data saved from the previous step to create a rendered video.
 
