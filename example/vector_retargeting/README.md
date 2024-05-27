@@ -34,6 +34,8 @@ python3 render_robot_hand.py \
   --headless
 ```
 
+python3 render_robot_hand.py --pickle-path data/leap_joints.pkl --output-video-path data/leap.mp4 --headless
+
 This command uses the data saved from the previous step to create a rendered video.
 
 ### Record a video of your own hand
