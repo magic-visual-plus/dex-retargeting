@@ -19,7 +19,7 @@ with open(_here / name / "__init__.py") as f:
 core_requirements = [
     "numpy",
     "pytransform3d",
-    "pin>=2.7.0",
+    # "pin>=2.7.0",
     "nlopt",
     "trimesh",
     "anytree",
